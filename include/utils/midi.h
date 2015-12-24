@@ -9,6 +9,7 @@
 #define MIDI_H_
 
 #include "app.h"
+#include "utils/layout.h"
 
 void midi_send_note(u8 index, u8 value);
 void midi_stop_note(u8 index, u8 value);

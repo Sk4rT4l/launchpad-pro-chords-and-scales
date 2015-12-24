@@ -21,6 +21,12 @@ void note_mode_open(){
 
 	// Activating solo mode
 	color_button(BT_SOLO, yellow);
+
+	// Initializing pad coordinates
+	layout_initialize_pad_coordinates();
+
+	// Recalculate pad notes
+	layout_recalculate_pad_notes();
 }
 
 /**

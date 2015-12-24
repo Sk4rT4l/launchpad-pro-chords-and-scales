@@ -11,6 +11,7 @@
 #include "app.h"
 #include "utils/buttons.h"
 #include "utils/colors.h"
+#include "utils/layout.h"
 #include "utils/midi.h"
 
 void note_mode_open();

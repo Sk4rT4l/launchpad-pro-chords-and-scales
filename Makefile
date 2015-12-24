@@ -2,7 +2,7 @@ BUILDDIR = build
 
 TOOLS = tools
 
-SOURCES += src/app.c src/mode/handler.c src/mode/note.c src/utils/buttons.c src/utils/colors.c src/utils/midi.c
+SOURCES += src/app.c src/mode/handler.c src/mode/note.c src/utils/buttons.c src/utils/colors.c src/utils/layout.c src/utils/midi.c
 
 INCLUDES += -Iinclude -I
 
