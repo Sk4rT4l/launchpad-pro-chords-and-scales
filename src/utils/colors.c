@@ -9,6 +9,7 @@
 
 Color green = {0x00,MAXLED,0x00};
 Color blue = {0x00,0x00,MAXLED};
+Color navy = {0x00,0x00,0x20};
 Color red = {MAXLED,0x00,0x00};
 Color yellow = {MAXLED,MAXLED,0x00};
 Color fuchsia = {MAXLED,0x00,MAXLED};

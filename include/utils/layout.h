@@ -9,9 +9,12 @@
 #define LAYOUT_H_
 
 #include "app.h"
+#include "music/scale.h"
 #include "utils/buttons.h"
 
 #define GRID_SIZE 8
+#define DEFAULT_OCTAVE 3
+#define DEFAULT_ROOT_NOTE 36
 
 typedef struct {
 	int x;
@@ -30,5 +33,7 @@ extern Layout current_layout;
 void layout_initialize_pad_coordinates();
 void layout_recalculate_pad_notes();
 u8 layout_get_midi_note(u8 index);
+void layout_draw_scale();
+void layout_refresh_octave_buttons();
 
 #endif /* LAYOUT_H_ */

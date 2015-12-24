@@ -27,6 +27,15 @@ void note_mode_open(){
 
 	// Recalculate pad notes
 	layout_recalculate_pad_notes();
+
+	// Activating buttons up and down for octaves
+	layout_refresh_octave_buttons();
+
+	// Initializing scales
+	scale_list_init();
+
+	// Drawing current scale
+	layout_draw_scale();
 }
 
 /**
@@ -42,6 +51,7 @@ void note_mode_close(){
 void note_mode_handle(u8 index, u8 value){
 	switch (index) {
 		case BT_SOLO:
+			// Toggling between solo and chord mode
 			if (value > 0){
 				if (note_mode_solo_flag) {
 					// Toggle chord mode on
@@ -52,6 +62,28 @@ void note_mode_handle(u8 index, u8 value){
 					note_mode_solo_flag = 1;
 					color_button(BT_SOLO, yellow);
 				}
+			}
+			break;
+		case BT_UP:
+			// Changing octave up
+			if (value > 0){
+				if (current_layout.octave < 10){
+					current_layout.octave++;
+					current_layout.root_note += OCTAVE_LENGTH;
+				}
+				layout_recalculate_pad_notes();
+				layout_refresh_octave_buttons();
+			}
+			break;
+		case BT_DOWN:
+			// Changing octave down
+			if (value > 0){
+				if (current_layout.octave > 0){
+					current_layout.octave--;
+					current_layout.root_note -= OCTAVE_LENGTH;
+				}
+				layout_recalculate_pad_notes();
+				layout_refresh_octave_buttons();
 			}
 			break;
 		default:
@@ -67,6 +99,7 @@ void note_mode_handle(u8 index, u8 value){
 						// Send midi note off
 						midi_stop_note(index, value);
 						clear_button(index);
+						layout_draw_scale();
 					}
 				} else {
 					// Send chord
