@@ -46,7 +46,32 @@ void change_current_mode(u8 index){
 void mode_handle(u8 index, u8 value){
 	switch (current_mode) {
 		case MODE_NOTE:
-			note_mode_handle(index, value);
+			if (setup_mode_flag){
+				note_mode_setup_handle(index, value);
+			} else {
+				note_mode_handle(index, value);
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+/**
+ * Toggling setup mode
+ */
+void mode_setup_toggle(u8 index, u8 value){
+	switch (current_mode) {
+		case MODE_NOTE:
+			if (value > 0 ){
+				if (setup_mode_flag == 0){
+					note_mode_setup_open();
+					setup_mode_flag = 1;
+				} else {
+					note_mode_setup_close();
+					setup_mode_flag = 0;
+				}
+			}
 			break;
 		default:
 			break;

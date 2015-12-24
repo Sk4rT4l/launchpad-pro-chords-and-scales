@@ -37,6 +37,7 @@
 
 #include "app.h"
 #include "mode/handler.h"
+#include "music/scale.h"
 #include "utils/buttons.h"
 
 //______________________________________________________________________________
@@ -61,7 +62,7 @@ void app_surface_event(u8 type, u8 index, u8 value)
 
 		case TYPESETUP:
 		{
-
+			mode_setup_toggle(index, value);
 		}
 		break;
 	}
@@ -103,6 +104,9 @@ void app_timer_event()
 
 void app_init()
 {
+	// Initializing scales
+	scale_list_init();
+
 	// Displaying "S" in blue
 	hal_plot_led(TYPEPAD, 11, 0x00, 0x20, 0x3F);
 	hal_plot_led(TYPEPAD, 12, 0x00, 0x20, 0x3F);

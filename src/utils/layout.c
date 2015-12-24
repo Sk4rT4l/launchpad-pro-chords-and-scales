@@ -9,6 +9,7 @@
 
 // Initializing variables
 u8 pad_notes[GRID_SIZE][GRID_SIZE];
+ScaleType pad_scales[GRID_SIZE][GRID_SIZE];
 PadCoordinate pad_coordinates[BT_LAST];
 Layout current_layout = {DEFAULT_ROOT_NOTE,DEFAULT_OCTAVE};
 
@@ -38,6 +39,17 @@ void layout_recalculate_pad_notes(){
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
 			pad_notes[x][y] = root_note + index;
+			index++;
+		}
+	}
+}
+
+void layout_initialize_pad_scales(){
+	u8 index = 0;
+
+	for (int y = 0; y < GRID_SIZE; y++){
+		for (int x = 0; x < GRID_SIZE; x++){
+			pad_scales[x][y] = (ScaleType)index;
 			index++;
 		}
 	}
@@ -96,5 +108,32 @@ void layout_refresh_octave_buttons(){
 	} else {
 		color_button(BT_UP,navy);
 		color_button(BT_DOWN,navy);
+	}
+}
+
+/**
+ * Drawing a list of scales
+ */
+void layout_list_scales(){
+	u8 pad_index = BT_PAD_FIRST;
+	for (int i = 0; i < SCALE_LIST_SIZE; i++){
+		color_button(pad_index, fuchsia);
+		pad_index++;
+		if (i != 0 && i % 8 == 0){
+			pad_index += 2;
+		}
+	}
+}
+
+/**
+ * Setting the current scale
+ */
+void layout_set_scale(u8 index){
+	PadCoordinate coord = pad_coordinates[index];
+	ScaleType pad_scale = pad_scales[coord.y][coord.x];
+	hal_send_midi(USBMIDI,NOTEON,(u8)pad_scale,0);
+	hal_send_midi(USBMIDI,NOTEOFF,(u8)pad_scale,0);
+	if (pad_scale <= SCALE_LIST_SIZE){
+		current_scale_type = pad_scale;
 	}
 }

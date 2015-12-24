@@ -31,9 +31,6 @@ void note_mode_open(){
 	// Activating buttons up and down for octaves
 	layout_refresh_octave_buttons();
 
-	// Initializing scales
-	scale_list_init();
-
 	// Drawing current scale
 	layout_draw_scale();
 }
@@ -43,6 +40,17 @@ void note_mode_open(){
  */
 void note_mode_close(){
 	clear_buttons();
+}
+
+void note_mode_setup_open(){
+	clear_pads();
+
+	// Drawing a list of scales
+	layout_list_scales();
+}
+
+void note_mode_setup_close(){
+	note_mode_open();
 }
 
 /**
@@ -104,6 +112,22 @@ void note_mode_handle(u8 index, u8 value){
 				} else {
 					// Send chord
 				}
+			}
+			break;
+	}
+}
+
+/**
+ * Handling setup events
+ */
+void note_mode_setup_handle(u8 index, u8 value){
+	switch (index) {
+		case BT_SHIFT:
+
+			break;
+		default:
+			if (index >= BT_PAD_FIRST && index <= BT_PAD_LAST){
+				layout_set_scale(index);
 			}
 			break;
 	}

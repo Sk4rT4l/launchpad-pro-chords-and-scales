@@ -20,10 +20,12 @@ typedef enum {
 	MODE_USER
 } Mode;
 
+extern int setup_mode_flag;
 extern Mode current_mode;
 
 void change_current_mode(u8 index);
 void mode_handle(u8 index, u8 value);
+void mode_setup_toggle(u8 index, u8 value);
 void mode_aftertouch(u8 index, u8 value);
 
 #endif /* HANDLER_H_ */

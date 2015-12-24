@@ -32,8 +32,11 @@ extern Layout current_layout;
 
 void layout_initialize_pad_coordinates();
 void layout_recalculate_pad_notes();
+void layout_initialize_pad_scales();
 u8 layout_get_midi_note(u8 index);
 void layout_draw_scale();
 void layout_refresh_octave_buttons();
+void layout_list_scales();
+void layout_set_scale(u8 index);
 
 #endif /* LAYOUT_H_ */
