@@ -8,5 +8,22 @@
 #ifndef HANDLER_H_
 #define HANDLER_H_
 
+#include "app.h"
+#include "mode/note.h"
+#include "utils/buttons.h"
+
+typedef enum {
+	MODE_DISABLED,
+	MODE_SESSION,
+	MODE_NOTE,
+	MODE_DEVICE,
+	MODE_USER
+} Mode;
+
+extern Mode current_mode;
+
+void change_current_mode(u8 index);
+void mode_handle(u8 index, u8 value);
+void mode_aftertouch(u8 index, u8 value);
 
 #endif /* HANDLER_H_ */
