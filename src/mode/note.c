@@ -25,6 +25,9 @@ void note_mode_open(){
 	// Initializing pad coordinates
 	layout_initialize_pad_coordinates();
 
+	// Initializing pad scales
+	layout_initialize_pad_scales();
+
 	// Recalculate pad notes
 	layout_recalculate_pad_notes();
 
@@ -137,6 +140,7 @@ void note_mode_setup_handle(u8 index, u8 value){
  * Handling aftertouch events
  */
 void note_mode_aftertouch(u8 index, u8 value){
+
 	if (note_mode_solo_flag){
 		midi_send_aftertouch(index, value);
 	} else {

@@ -21,7 +21,7 @@ void layout_initialize_pad_coordinates(){
 
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
-			PadCoordinate coord = {y, x};
+			PadCoordinate coord = {.y = y, .x = x};
 			pad_coordinates[current_pad] = coord;
 			current_pad++;
 		}
@@ -38,7 +38,7 @@ void layout_recalculate_pad_notes(){
 
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
-			pad_notes[x][y] = root_note + index;
+			pad_notes[y][x] = root_note + index;
 			index++;
 		}
 	}
@@ -49,7 +49,11 @@ void layout_initialize_pad_scales(){
 
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
-			pad_scales[x][y] = (ScaleType)index;
+			pad_scales[y][x] = (int)index;
+//			hal_send_midi(USBMIDI,NOTEON,(u8)y,index);
+//			hal_send_midi(USBMIDI,NOTEON,(u8)x,index);
+//			hal_send_midi(USBMIDI,NOTEOFF,(u8)y,index);
+//			hal_send_midi(USBMIDI,NOTEOFF,(u8)x,index);
 			index++;
 		}
 	}
@@ -129,11 +133,15 @@ void layout_list_scales(){
  * Setting the current scale
  */
 void layout_set_scale(u8 index){
+	hal_send_midi(USBMIDI,NOTEON,index,0);
+	hal_send_midi(USBMIDI,NOTEOFF,index,0);
 	PadCoordinate coord = pad_coordinates[index];
 	ScaleType pad_scale = pad_scales[coord.y][coord.x];
 	hal_send_midi(USBMIDI,NOTEON,(u8)pad_scale,0);
 	hal_send_midi(USBMIDI,NOTEOFF,(u8)pad_scale,0);
-	if (pad_scale <= SCALE_LIST_SIZE){
+	hal_send_midi(USBMIDI,NOTEON,(u8)SCALE_MINOR,0);
+	hal_send_midi(USBMIDI,NOTEOFF,(u8)SCALE_MINOR,0);
+//	if (pad_scale <= SCALE_LIST_SIZE){
 		current_scale_type = pad_scale;
-	}
+//	}
 }
