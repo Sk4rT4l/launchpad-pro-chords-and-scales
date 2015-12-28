@@ -140,7 +140,7 @@ void note_mode_setup_handle(u8 index, u8 value){
  * Handling aftertouch events
  */
 void note_mode_aftertouch(u8 index, u8 value){
-
+	// TODO Disable aftertouch if setup mode is on
 	if (note_mode_solo_flag){
 		midi_send_aftertouch(index, value);
 	} else {

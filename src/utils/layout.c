@@ -9,6 +9,7 @@
 
 // Initializing variables
 u8 pad_notes[GRID_SIZE][GRID_SIZE];
+// TODO Change pad_scales size to SCALE_LIST_SIZE
 ScaleType pad_scales[GRID_SIZE][GRID_SIZE];
 PadCoordinate pad_coordinates[BT_LAST];
 Layout current_layout = {DEFAULT_ROOT_NOTE,DEFAULT_OCTAVE};
@@ -50,11 +51,18 @@ void layout_initialize_pad_scales(){
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
 			pad_scales[y][x] = (int)index;
+			// DEBUG
 //			hal_send_midi(USBMIDI,NOTEON,(u8)y,index);
 //			hal_send_midi(USBMIDI,NOTEON,(u8)x,index);
 //			hal_send_midi(USBMIDI,NOTEOFF,(u8)y,index);
 //			hal_send_midi(USBMIDI,NOTEOFF,(u8)x,index);
 			index++;
+			if (index == SCALE_LIST_SIZE){
+				break;
+			}
+		}
+		if (index == SCALE_LIST_SIZE){
+			break;
 		}
 	}
 }
@@ -133,15 +141,17 @@ void layout_list_scales(){
  * Setting the current scale
  */
 void layout_set_scale(u8 index){
-	hal_send_midi(USBMIDI,NOTEON,index,0);
-	hal_send_midi(USBMIDI,NOTEOFF,index,0);
+	// DEBUG
+//	hal_send_midi(USBMIDI,NOTEON,index,0);
+//	hal_send_midi(USBMIDI,NOTEOFF,index,0);
 	PadCoordinate coord = pad_coordinates[index];
 	ScaleType pad_scale = pad_scales[coord.y][coord.x];
-	hal_send_midi(USBMIDI,NOTEON,(u8)pad_scale,0);
-	hal_send_midi(USBMIDI,NOTEOFF,(u8)pad_scale,0);
-	hal_send_midi(USBMIDI,NOTEON,(u8)SCALE_MINOR,0);
-	hal_send_midi(USBMIDI,NOTEOFF,(u8)SCALE_MINOR,0);
-//	if (pad_scale <= SCALE_LIST_SIZE){
+	// DEBUG
+//	hal_send_midi(USBMIDI,NOTEON,(u8)pad_scale,0);
+//	hal_send_midi(USBMIDI,NOTEOFF,(u8)pad_scale,0);
+//	hal_send_midi(USBMIDI,NOTEON,(u8)SCALE_MINOR,0);
+//	hal_send_midi(USBMIDI,NOTEOFF,(u8)SCALE_MINOR,0);
+	if (pad_scale <= SCALE_LIST_SIZE){
 		current_scale_type = pad_scale;
-//	}
+	}
 }
