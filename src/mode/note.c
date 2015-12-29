@@ -118,7 +118,22 @@ void note_mode_handle(u8 index, u8 value){
 						layout_draw_scale();
 					}
 				} else {
+					Chord chord = chord_list[current_chord_type];
 					// Send chord
+					if (value > 0){
+						midi_send_chord(index, value, chord);
+						for (int i = 0; i < chord.size; i++){
+							// TODO Bug : only pads have to be colored
+							color_button(index + chord.offsets[i], blue);
+						}
+					} else {
+						midi_stop_chord(index, value, chord);
+						for (int i = 0; i < chord.size; i++){
+							// TODO Bug : only pads have to be cleared
+							clear_button(index + chord.offsets[i]);
+						}
+						layout_draw_scale();
+					}
 				}
 			}
 			break;
@@ -149,6 +164,6 @@ void note_mode_aftertouch(u8 index, u8 value){
 	if (note_mode_solo_flag){
 		midi_send_aftertouch(index, value);
 	} else {
-
+		// TODO Implement aftertouch for chords
 	}
 }

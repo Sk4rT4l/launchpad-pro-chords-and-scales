@@ -33,3 +33,25 @@ void midi_send_aftertouch(u8 index, u8 value){
 	hal_send_midi(USBMIDI, POLYAFTERTOUCH | 0, midi_note, value);
 	hal_send_midi(DINMIDI, POLYAFTERTOUCH | 0, midi_note, value);
 }
+
+/**
+ * Sending midi chord (index = root note)
+ */
+void midi_send_chord(u8 index, u8 value, Chord chord){
+	u8 midi_note = layout_get_midi_note(index);
+	for (int i = 0; i < chord.size; i++){
+		hal_send_midi(USBMIDI, NOTEON, midi_note + chord.offsets[i], value);
+		hal_send_midi(DINMIDI, NOTEON, midi_note + chord.offsets[i], value);
+	}
+}
+
+/**
+ * Stopping midi chord (index = root note)
+ */
+void midi_stop_chord(u8 index, u8 value, Chord chord){
+	u8 midi_note = layout_get_midi_note(index);
+	for (int i = 0; i < chord.size; i++){
+		hal_send_midi(USBMIDI, NOTEOFF, midi_note + chord.offsets[i], value);
+		hal_send_midi(DINMIDI, NOTEOFF, midi_note + chord.offsets[i], value);
+	}
+}

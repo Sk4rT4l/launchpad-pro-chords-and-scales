@@ -9,10 +9,10 @@
 #define SCALE_H_
 
 #include "app.h"
+#include "utils/global.h"
 
 // Update it when adding scales
 #define SCALE_LIST_SIZE 6
-#define OCTAVE_LENGTH 12
 
 // 27 scales
 typedef enum {

@@ -9,6 +9,7 @@
 #define NOTE_H_
 
 #include "app.h"
+#include "music/chord.h"
 #include "music/scale.h"
 #include "utils/buttons.h"
 #include "utils/colors.h"

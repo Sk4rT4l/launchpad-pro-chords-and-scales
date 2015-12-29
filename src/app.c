@@ -37,6 +37,7 @@
 
 #include "app.h"
 #include "mode/handler.h"
+#include "music/chord.h"
 #include "music/scale.h"
 #include "utils/buttons.h"
 
@@ -106,6 +107,9 @@ void app_init()
 {
 	// Initializing scales
 	scale_list_init();
+
+	// Initializing chords
+	chord_list_init();
 
 	// Displaying "S" in blue
 	hal_plot_led(TYPEPAD, 11, 0x00, 0x20, 0x3F);
