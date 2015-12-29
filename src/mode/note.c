@@ -48,11 +48,16 @@ void note_mode_close(){
 void note_mode_setup_open(){
 	clear_pads();
 
+	// Coloring the setup button
+	color_setup_button(red);
+
 	// Drawing a list of scales
 	layout_list_scales();
 }
 
 void note_mode_setup_close(){
+	clear_setup_button();
+
 	note_mode_open();
 }
 

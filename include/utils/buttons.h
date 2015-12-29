@@ -69,5 +69,7 @@ void clear_mode_buttons();
 void clear_pads();
 void clear_button(u8 index);
 void color_button(u8 index, Color color);
+void clear_setup_button();
+void color_setup_button(Color color);
 
 #endif /* BUTTONS_H_ */

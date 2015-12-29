@@ -55,3 +55,19 @@ void color_button(u8 index, Color color)
 {
 	hal_plot_led(TYPEPAD, index, color.r, color.g, color.b);
 }
+
+/**
+ * Clear the setup button
+ */
+void clear_setup_button()
+{
+	hal_plot_led(TYPESETUP, BT_SETUP, 0x00, 0x00, 0x00);
+}
+
+/**
+ * Color the setup button
+ */
+void color_setup_button(Color color)
+{
+	hal_plot_led(TYPESETUP, BT_SETUP, color.r, color.g, color.b);
+}
