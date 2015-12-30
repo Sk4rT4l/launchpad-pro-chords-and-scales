@@ -40,7 +40,7 @@ void layout_initialize_pad_indexes(){
 
 	for (int y = 0; y < GRID_SIZE; y++){
 		for (int x = 0; x < GRID_SIZE; x++){
-			pad_indexes[index] = current_pad:
+			pad_indexes[index] = current_pad;
 			index++;
 			current_pad++;
 		}
@@ -51,7 +51,7 @@ void layout_initialize_pad_indexes(){
 /**
  * Retrieve the pad index in pad_indexes array
  */
-void layout_get_pad_index(u8 bt_index){
+u8 layout_get_pad_index(u8 bt_index){
 	u8 pad_index = -1;
 
 	for (int i = 0; i < (GRID_SIZE*GRID_SIZE); i++){
@@ -67,7 +67,7 @@ void layout_get_pad_index(u8 bt_index){
 /**
  * Get the button index in the pad_indexes array
  */
-void layout_get_pad_button(u8 index){
+u8 layout_get_pad_button(u8 index){
 	u8 bt_index = -1;
 	
 	if (index < (GRID_SIZE*GRID_SIZE)){

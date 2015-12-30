@@ -25,6 +25,9 @@ void note_mode_open(){
 	// Initializing pad coordinates
 	layout_initialize_pad_coordinates();
 
+	// Initializing pad indexes
+	layout_initialize_pad_indexes();
+
 	// Initializing pad scales
 	layout_initialize_pad_scales();
 
