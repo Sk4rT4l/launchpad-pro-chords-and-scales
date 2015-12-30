@@ -127,7 +127,6 @@ void note_mode_handle(u8 index, u8 value){
 						midi_send_chord(index, value, chord);
 						u8 pad_index = layout_get_pad_index(index);
 						for (int i = 0; i < chord.size; i++){
-							// TODO Bug : only pads have to be colored
 							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
 							if (bt_index >= 0){
 								color_button(bt_index, blue);
@@ -137,7 +136,6 @@ void note_mode_handle(u8 index, u8 value){
 						midi_stop_chord(index, value, chord);
 						u8 pad_index = layout_get_pad_index(index);
 						for (int i = 0; i < chord.size; i++){
-							// TODO Bug : only pads have to be cleared
 							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
 							if (bt_index >= 0){
 								clear_button(bt_index);
