@@ -12,6 +12,7 @@ u8 pad_notes[GRID_SIZE][GRID_SIZE];
 // TODO Change pad_scales size to SCALE_LIST_SIZE
 ScaleType pad_scales[GRID_SIZE][GRID_SIZE];
 PadCoordinate pad_coordinates[BT_LAST];
+u8 pad_indexes[GRID_SIZE*GRID_SIZE];
 Layout current_layout = {DEFAULT_ROOT_NOTE,DEFAULT_OCTAVE};
 
 /**
@@ -28,6 +29,52 @@ void layout_initialize_pad_coordinates(){
 		}
 		current_pad += 2;
 	}
+}
+
+/**
+ * Initialize pad indexes
+ */
+void layout_initialize_pad_indexes(){
+	u8 current_pad = BT_PAD_FIRST;
+	u8 index = 0;
+
+	for (int y = 0; y < GRID_SIZE; y++){
+		for (int x = 0; x < GRID_SIZE; x++){
+			pad_indexes[index] = current_pad:
+			index++;
+			current_pad++;
+		}
+		current_pad += 2;
+	}
+}
+
+/**
+ * Retrieve the pad index in pad_indexes array
+ */
+void layout_get_pad_index(u8 bt_index){
+	u8 pad_index = -1;
+
+	for (int i = 0; i < (GRID_SIZE*GRID_SIZE); i++){
+		if (pad_indexes[i] == bt_index){
+			pad_index = i;
+			break;
+		}
+	}
+
+	return pad_index;
+}
+
+/**
+ * Get the button index in the pad_indexes array
+ */
+void layout_get_pad_button(u8 index){
+	u8 bt_index = -1;
+	
+	if (index < (GRID_SIZE*GRID_SIZE)){
+		bt_index = pad_indexes[index];
+	}
+	
+	return bt_index;
 }
 
 /**

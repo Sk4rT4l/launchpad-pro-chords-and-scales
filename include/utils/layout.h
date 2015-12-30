@@ -31,6 +31,8 @@ typedef struct {
 extern Layout current_layout;
 
 void layout_initialize_pad_coordinates();
+void layout_initialize_pad_indexes();
+void layout_get_pad_button(u8 index);
 void layout_recalculate_pad_notes();
 void layout_initialize_pad_scales();
 u8 layout_get_midi_note(u8 index);

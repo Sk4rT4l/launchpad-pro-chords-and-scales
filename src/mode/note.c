@@ -122,15 +122,23 @@ void note_mode_handle(u8 index, u8 value){
 					// Send chord
 					if (value > 0){
 						midi_send_chord(index, value, chord);
+						u8 pad_index = layout_get_pad_index(index);
 						for (int i = 0; i < chord.size; i++){
 							// TODO Bug : only pads have to be colored
-							color_button(index + chord.offsets[i], blue);
+							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
+							if (bt_index >= 0){
+								color_button(bt_index, blue);
+							}
 						}
 					} else {
 						midi_stop_chord(index, value, chord);
+						u8 pad_index = layout_get_pad_index(index);
 						for (int i = 0; i < chord.size; i++){
 							// TODO Bug : only pads have to be cleared
-							clear_button(index + chord.offsets[i]);
+							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
+							if (bt_index >= 0){
+								clear_button(bt_index);
+							}
 						}
 						layout_draw_scale();
 					}
