@@ -165,8 +165,10 @@ void note_mode_handle(u8 index, u8 value){
 					// Storing the current chordtype
 					stored_chords[((index - BT_PLAY_1) / 10)] = current_chord_type;
 				} else {
-					current_chord_type = stored_chords[((index - BT_PLAY_1) / 10)];
-					current_chord = chord_list[current_chord_type];
+					if (stored_chords[((index - BT_PLAY_1) / 10)] != 0x64) {
+						current_chord_type = stored_chords[((index - BT_PLAY_1) / 10)];
+						current_chord = chord_list[current_chord_type];
+					}
 				}
 			}
 			break;

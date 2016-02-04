@@ -11,7 +11,7 @@
 #include "app.h"
 #include "utils/global.h"
 
-#define CHORD_LIST_SIZE 2
+#define CHORD_LIST_SIZE 12
 
 // TODO Add all chords
 typedef enum {
