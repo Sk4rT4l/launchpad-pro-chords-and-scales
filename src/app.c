@@ -85,7 +85,9 @@ void app_sysex_event(u8 port, u8 * data, u16 count)
 
 void app_aftertouch_event(u8 index, u8 value)
 {
-	mode_aftertouch(index, value);
+	if (setup_mode_flag == 0){
+		mode_aftertouch(index, value);
+	}
 }
 	
 //______________________________________________________________________________

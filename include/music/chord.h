@@ -39,5 +39,7 @@ extern ChordType current_chord_type;
 extern Chord chord_list[CHORD_LIST_SIZE];
 
 void chord_list_init();
+void chord_select_next();
+void chord_select_previous();
 
 #endif /* CHORD_H_ */

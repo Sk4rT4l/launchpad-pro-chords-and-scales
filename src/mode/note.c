@@ -9,6 +9,8 @@
 
 // Initializing variables for differents note modes
 int note_mode_solo_flag = 1;
+int bt_shift_pressed = 0;
+Chord current_chord;
 
 /**
  * Initializing the note mode layout
@@ -20,7 +22,9 @@ void note_mode_open(){
 	color_button(BT_NOTE, green);
 
 	// Activating solo mode
-	color_button(BT_SOLO, yellow);
+	if (note_mode_solo_flag){
+		color_button(BT_SOLO, yellow);
+	}
 
 	// Initializing pad coordinates
 	layout_initialize_pad_coordinates();
@@ -69,6 +73,18 @@ void note_mode_setup_close(){
  */
 void note_mode_handle(u8 index, u8 value){
 	switch (index) {
+		case BT_SHIFT:
+			if (value > 0){
+				bt_shift_pressed = 1;
+				color_button(BT_SHIFT, yellow);
+				color_button(BT_UP, yellow);
+				color_button(BT_DOWN, yellow);
+			} else {
+				bt_shift_pressed = 0;
+				clear_button(BT_SHIFT);
+				layout_refresh_octave_buttons();
+			}
+			break;
 		case BT_SOLO:
 			// Toggling between solo and chord mode
 			if (value > 0){
@@ -84,30 +100,40 @@ void note_mode_handle(u8 index, u8 value){
 			}
 			break;
 		case BT_UP:
-			// Changing octave up
 			if (value > 0){
-				if (current_layout.octave < 10){
-					current_layout.octave++;
-					current_layout.root_note += OCTAVE_LENGTH;
+				if (bt_shift_pressed) {
+					// Changing chord up
+					chord_select_next();
+				} else {
+					// Changing octave up
+					if (current_layout.octave < 10){
+						current_layout.octave++;
+						current_layout.root_note += OCTAVE_LENGTH;
+					}
+					layout_recalculate_pad_notes();
+					layout_refresh_octave_buttons();
 				}
-				layout_recalculate_pad_notes();
-				layout_refresh_octave_buttons();
 			}
 			break;
 		case BT_DOWN:
-			// Changing octave down
 			if (value > 0){
-				if (current_layout.octave > 0){
-					current_layout.octave--;
-					current_layout.root_note -= OCTAVE_LENGTH;
+				if (bt_shift_pressed){
+					// Changing chord down
+					chord_select_previous();
+				} else {
+					// Changing octave down
+					if (current_layout.octave > 0){
+						current_layout.octave--;
+						current_layout.root_note -= OCTAVE_LENGTH;
+					}
+					layout_recalculate_pad_notes();
+					layout_refresh_octave_buttons();
 				}
-				layout_recalculate_pad_notes();
-				layout_refresh_octave_buttons();
 			}
 			break;
 		default:
 			// Handling pad events
-			if (index >= BT_PAD_FIRST && index <= BT_PAD_LAST){
+			if (is_pad(index)){
 				if (note_mode_solo_flag){
 					// Send only one note
 					if (value > 0){
@@ -122,6 +148,7 @@ void note_mode_handle(u8 index, u8 value){
 					}
 				} else {
 					Chord chord = chord_list[current_chord_type];
+					current_chord = chord;
 					// Send chord
 					if (value > 0){
 						midi_send_chord(index, value, chord);
@@ -158,7 +185,7 @@ void note_mode_setup_handle(u8 index, u8 value){
 
 			break;
 		default:
-			if (index >= BT_PAD_FIRST && index <= BT_PAD_LAST){
+			if (is_pad(index)){
 				layout_set_scale(index);
 			}
 			break;
@@ -169,10 +196,9 @@ void note_mode_setup_handle(u8 index, u8 value){
  * Handling aftertouch events
  */
 void note_mode_aftertouch(u8 index, u8 value){
-	// TODO Disable aftertouch if setup mode is on
 	if (note_mode_solo_flag){
 		midi_send_aftertouch(index, value);
 	} else {
-		// TODO Implement aftertouch for chords
+		midi_send_chord_aftertouch(index, value, current_chord);
 	}
 }

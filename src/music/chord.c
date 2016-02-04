@@ -25,3 +25,15 @@ void chord_list_init()
 	};
 	chord_list[CHORD_MINOR] = chord_minor;
 }
+
+void chord_select_next(){
+	if (current_chord_type < (CHORD_LIST_SIZE - 1)){
+		current_chord_type++;
+	}
+}
+
+void chord_select_previous(){
+	if (current_chord_type > 0){
+		current_chord_type--;
+	}
+}

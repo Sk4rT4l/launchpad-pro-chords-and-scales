@@ -55,3 +55,11 @@ void midi_stop_chord(u8 index, u8 value, Chord chord){
 		hal_send_midi(DINMIDI, NOTEOFF, midi_note + chord.offsets[i], value);
 	}
 }
+
+void midi_send_chord_aftertouch(u8 index, u8 value, Chord chord){
+	u8 midi_note = layout_get_midi_note(index);
+	for (int i = 0; i < chord.size; i++){
+		hal_send_midi(USBMIDI, POLYAFTERTOUCH | 0, midi_note + chord.offsets[i], value);
+		hal_send_midi(DINMIDI, POLYAFTERTOUCH | 0, midi_note + chord.offsets[i], value);
+	}
+}
