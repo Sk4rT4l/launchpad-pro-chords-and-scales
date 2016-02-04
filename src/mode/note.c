@@ -10,7 +10,9 @@
 // Initializing variables for differents note modes
 int note_mode_solo_flag = 1;
 int bt_shift_pressed = 0;
+int bt_record_arm_pressed = 0;
 Chord current_chord;
+ChordType stored_chords[8] = { 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64 };
 
 /**
  * Initializing the note mode layout
@@ -74,6 +76,7 @@ void note_mode_setup_close(){
 void note_mode_handle(u8 index, u8 value){
 	switch (index) {
 		case BT_SHIFT:
+			// Updating the bt_shift_pressed flag
 			if (value > 0){
 				bt_shift_pressed = 1;
 				color_button(BT_SHIFT, yellow);
@@ -128,6 +131,42 @@ void note_mode_handle(u8 index, u8 value){
 					}
 					layout_recalculate_pad_notes();
 					layout_refresh_octave_buttons();
+				}
+			}
+			break;
+		case BT_RECORD_ARM:
+			if (value > 0){
+				bt_record_arm_pressed = 1;
+				color_button(BT_RECORD_ARM, yellow);
+				color_button(BT_PLAY_1, yellow);
+				color_button(BT_PLAY_2, yellow);
+				color_button(BT_PLAY_3, yellow);
+				color_button(BT_PLAY_4, yellow);
+				color_button(BT_PLAY_5, yellow);
+				color_button(BT_PLAY_6, yellow);
+				color_button(BT_PLAY_7, yellow);
+				color_button(BT_PLAY_8, yellow);
+			} else {
+				bt_record_arm_pressed = 0;
+				clear_button(BT_RECORD_ARM);
+				note_mode_refresh_stored_chords();
+			}
+			break;
+		case BT_PLAY_1:
+		case BT_PLAY_2:
+		case BT_PLAY_3:
+		case BT_PLAY_4:
+		case BT_PLAY_5:
+		case BT_PLAY_6:
+		case BT_PLAY_7:
+		case BT_PLAY_8:
+			if (value > 0){
+				if (bt_record_arm_pressed){
+					// Storing the current chordtype
+					stored_chords[((index - BT_PLAY_1) / 10)] = current_chord_type;
+				} else {
+					current_chord_type = stored_chords[((index - BT_PLAY_1) / 10)];
+					current_chord = chord_list[current_chord_type];
 				}
 			}
 			break;
@@ -200,5 +239,19 @@ void note_mode_aftertouch(u8 index, u8 value){
 		midi_send_aftertouch(index, value);
 	} else {
 		midi_send_chord_aftertouch(index, value, current_chord);
+	}
+}
+
+/**
+ * Refreshing the play buttons with stored chordtypes
+ */
+void note_mode_refresh_stored_chords(){
+	u8 start_index = BT_PLAY_1;
+	for (int i = 0; i < 8; i++){
+		if (stored_chords[i] != 0x64){
+			color_button((start_index + (10 * i)), green);
+		} else {
+			clear_button((start_index + (10 * i)));
+		}
 	}
 }

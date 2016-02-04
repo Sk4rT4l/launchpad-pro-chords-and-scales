@@ -23,5 +23,6 @@ void note_mode_setup_close();
 void note_mode_handle(u8 index, u8 value);
 void note_mode_setup_handle(u8 index, u8 value);
 void note_mode_aftertouch(u8 index, u8 value);
+void note_mode_refresh_stored_chords();
 
 #endif /* NOTE_H_ */

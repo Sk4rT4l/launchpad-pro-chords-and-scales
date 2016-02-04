@@ -40,8 +40,6 @@
 #define BT_PLAY_4 49
 #define BT_PLAY_5 59
 #define BT_PLAY_6 69
-#define BT_PLAY_6 69
-#define BT_PLAY_7 79
 #define BT_PLAY_7 79
 #define BT_PLAY_8 89
 
