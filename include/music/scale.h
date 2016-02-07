@@ -12,7 +12,7 @@
 #include "utils/global.h"
 
 // Update it when adding scales
-#define SCALE_LIST_SIZE 6
+#define SCALE_LIST_SIZE 16
 
 // 27 scales
 typedef enum {

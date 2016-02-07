@@ -176,11 +176,11 @@ void layout_refresh_octave_buttons(){
 void layout_list_scales(){
 	u8 pad_index = BT_PAD_FIRST;
 	for (int i = 0; i < SCALE_LIST_SIZE; i++){
-		color_button(pad_index, fuchsia);
-		pad_index++;
-		if (i != 0 && i % 8 == 0){
+		if (i != 0 && (i % 8 == 0)){
 			pad_index += 2;
 		}
+		color_button(pad_index, fuchsia);
+		pad_index++;
 	}
 }
 
