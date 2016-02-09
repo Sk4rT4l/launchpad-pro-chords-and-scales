@@ -135,9 +135,9 @@ void layout_draw_scale()
 	{
 		for (int x = 0; x < GRID_SIZE; x++)
 		{
-			Color color = aqua;
+			Color color = aquamarine;
 			if (scale_index == 0){
-				color = fuchsia;
+				color = orchid;
 			}
 
 			if (current_scale.notes[scale_index]) {
@@ -179,7 +179,12 @@ void layout_list_scales(){
 		if (i != 0 && (i % 8 == 0)){
 			pad_index += 2;
 		}
-		color_button(pad_index, fuchsia);
+		if (i != current_scale_type){
+			color_button(pad_index, orchid);
+		} else {
+			// current_scale
+			color_button(pad_index, fuchsia);
+		}
 		pad_index++;
 	}
 }

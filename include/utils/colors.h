@@ -16,12 +16,17 @@ typedef struct {
 	u8 b;
 } Color;
 
+extern Color chartreuse;
+extern Color spring_green;
 extern Color green;
 extern Color blue;
 extern Color navy;
 extern Color red;
+extern Color red2;
 extern Color yellow;
+extern Color orchid;
 extern Color fuchsia;
 extern Color aqua;
-
+extern Color aquamarine;
+extern Color white;
 #endif /* COLORS_H_ */

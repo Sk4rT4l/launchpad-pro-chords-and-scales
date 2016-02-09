@@ -21,7 +21,7 @@ void note_mode_open(){
 	clear_pads();
 
 	// Activating "Note" button
-	color_button(BT_NOTE, green);
+	color_button(BT_NOTE, white);
 
 	// Activating solo mode
 	if (note_mode_solo_flag){
@@ -180,7 +180,7 @@ void note_mode_handle(u8 index, u8 value){
 					if (value > 0){
 						// Send midi note on
 						midi_send_note(index, value);
-						color_button(index, blue);
+						color_button(index, chartreuse);
 					} else {
 						// Send midi note off
 						midi_stop_note(index, value);
@@ -197,7 +197,7 @@ void note_mode_handle(u8 index, u8 value){
 						for (int i = 0; i < chord.size; i++){
 							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
 							if (bt_index >= 0){
-								color_button(bt_index, blue);
+								color_button(bt_index, chartreuse);
 							}
 						}
 					} else {
@@ -228,6 +228,7 @@ void note_mode_setup_handle(u8 index, u8 value){
 		default:
 			if (is_pad(index)){
 				layout_set_scale(index);
+				layout_list_scales();
 			}
 			break;
 	}
