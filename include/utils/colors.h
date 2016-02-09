@@ -19,6 +19,8 @@ typedef struct {
 extern Color chartreuse;
 extern Color spring_green;
 extern Color green;
+extern Color olive_green1;
+extern Color olive_green2;
 extern Color blue;
 extern Color navy;
 extern Color red;

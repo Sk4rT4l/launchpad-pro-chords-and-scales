@@ -45,6 +45,9 @@ void note_mode_open(){
 
 	// Drawing current scale
 	layout_draw_scale();
+
+	// Refresh stored chords
+	note_mode_refresh_stored_chords();
 }
 
 /**
@@ -107,6 +110,7 @@ void note_mode_handle(u8 index, u8 value){
 				if (bt_shift_pressed) {
 					// Changing chord up
 					chord_select_next();
+					note_mode_refresh_stored_chords();
 				} else {
 					// Changing octave up
 					if (current_layout.octave < 10){
@@ -123,6 +127,7 @@ void note_mode_handle(u8 index, u8 value){
 				if (bt_shift_pressed){
 					// Changing chord down
 					chord_select_previous();
+					note_mode_refresh_stored_chords();
 				} else {
 					// Changing octave down
 					if (current_layout.octave > 0){
@@ -164,10 +169,12 @@ void note_mode_handle(u8 index, u8 value){
 				if (bt_record_arm_pressed){
 					// Storing the current chordtype
 					stored_chords[((index - BT_PLAY_1) / 10)] = current_chord_type;
+					note_mode_refresh_stored_chords();
 				} else {
 					if (stored_chords[((index - BT_PLAY_1) / 10)] != 0x64) {
 						current_chord_type = stored_chords[((index - BT_PLAY_1) / 10)];
 						current_chord = chord_list[current_chord_type];
+						note_mode_refresh_stored_chords();
 					}
 				}
 			}
@@ -252,7 +259,11 @@ void note_mode_refresh_stored_chords(){
 	u8 start_index = BT_PLAY_1;
 	for (int i = 0; i < 8; i++){
 		if (stored_chords[i] != 0x64){
-			color_button((start_index + (10 * i)), green);
+			if (stored_chords[i] != current_chord_type){
+				color_button((start_index + (10 * i)), olive_green1);
+			} else {
+				color_button((start_index + (10 * i)), green);
+			}
 		} else {
 			clear_button((start_index + (10 * i)));
 		}
