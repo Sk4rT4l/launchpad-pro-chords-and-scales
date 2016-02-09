@@ -20,6 +20,10 @@ void change_current_mode(u8 index){
 		case MODE_NOTE:
 			if (index != BT_NOTE) {
 				note_mode_close();
+				if (setup_mode_flag){
+					clear_setup_button();
+					setup_mode_flag = 0;
+				}
 			}
 			break;
 		default:

@@ -19,4 +19,6 @@ void midi_send_chord(u8 index, u8 value, Chord chord);
 void midi_stop_chord(u8 index, u8 value, Chord chord);
 void midi_send_chord_aftertouch(u8 index, u8 value, Chord chord);
 
+extern int current_midi_channel;
+
 #endif /* MIDI_H_ */

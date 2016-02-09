@@ -11,6 +11,7 @@
 u8 pad_notes[GRID_SIZE][GRID_SIZE];
 // TODO Change pad_scales size to SCALE_LIST_SIZE
 ScaleType pad_scales[GRID_SIZE][GRID_SIZE];
+int pad_midi_channels[16];
 PadCoordinate pad_coordinates[BT_LAST];
 u8 pad_indexes[GRID_SIZE*GRID_SIZE];
 Layout current_layout = {DEFAULT_ROOT_NOTE,DEFAULT_OCTAVE};
@@ -92,6 +93,9 @@ void layout_recalculate_pad_notes(){
 	}
 }
 
+/**
+ * Initializing array containing pad scales refering to coordinates
+ */
 void layout_initialize_pad_scales(){
 	u8 index = 0;
 
@@ -111,6 +115,15 @@ void layout_initialize_pad_scales(){
 		if (index == SCALE_LIST_SIZE){
 			break;
 		}
+	}
+}
+
+/**
+ * Initializing array containing midi channels
+ */
+void layout_initialize_pad_midi_channels(){
+	for (int i = 0; i < 16; i++){
+		pad_midi_channels[i] = i + 1;
 	}
 }
 
@@ -206,4 +219,34 @@ void layout_set_scale(u8 index){
 	if (pad_scale <= SCALE_LIST_SIZE){
 		current_scale_type = pad_scale;
 	}
+}
+
+/**
+ * Drawing a list of all midi channels
+ */
+void layout_list_midi_channels(){
+	u8 pad_index = 71;
+
+	for (int i = 1; i <= 16; i++){
+		if (!is_pad(pad_index)){
+			pad_index += 2;
+		}
+		if (i == current_midi_channel){
+			color_button(pad_index, green);
+		} else {
+			color_button(pad_index, olive_green1);
+		}
+		pad_index++;
+	}
+}
+
+/**
+ * Setting the current midi channel
+ */
+void layout_set_midi_channel(u8 index){
+	u8 array_index = index - 71;
+	if (index >= 81){
+		array_index = index - 71 - 2;
+	}
+	current_midi_channel = pad_midi_channels[array_index];
 }

@@ -18,7 +18,7 @@ ChordType stored_chords[8] = { 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64 };
  * Initializing the note mode layout
  */
 void note_mode_open(){
-	clear_pads();
+	clear_buttons();
 
 	// Activating "Note" button
 	color_button(BT_NOTE, white);
@@ -48,6 +48,9 @@ void note_mode_open(){
 
 	// Refresh stored chords
 	note_mode_refresh_stored_chords();
+
+	// Initializing midi channels
+	layout_initialize_pad_midi_channels();
 }
 
 /**
@@ -58,13 +61,19 @@ void note_mode_close(){
 }
 
 void note_mode_setup_open(){
-	clear_pads();
+	note_mode_close();
+
+	// Activating "Note" button
+	color_button(BT_NOTE, white);	
 
 	// Coloring the setup button
 	color_setup_button(red);
 
 	// Drawing a list of scales
 	layout_list_scales();
+
+	// Drawing a list of midi channels
+	layout_list_midi_channels();
 }
 
 void note_mode_setup_close(){
@@ -234,8 +243,15 @@ void note_mode_setup_handle(u8 index, u8 value){
 			break;
 		default:
 			if (is_pad(index)){
-				layout_set_scale(index);
+				if (index >= 71 && index <= 88){
+					// midi channel selection
+					layout_set_midi_channel(index);
+				} else {
+					// scale selection
+					layout_set_scale(index);
+				}
 				layout_list_scales();
+				layout_list_midi_channels();
 			}
 			break;
 	}
