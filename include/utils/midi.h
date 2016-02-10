@@ -12,6 +12,9 @@
 #include "music/chord.h"
 #include "utils/layout.h"
 
+#define BT_FIRST_MIDI_CHANNEL 71
+#define BT_LAST_MIDI_CHANNEL 88
+
 void midi_send_note(u8 index, u8 value);
 void midi_stop_note(u8 index, u8 value);
 void midi_send_aftertouch(u8 index, u8 value);

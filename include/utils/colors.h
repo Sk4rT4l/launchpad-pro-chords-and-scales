@@ -26,6 +26,7 @@ extern Color navy;
 extern Color red;
 extern Color red2;
 extern Color yellow;
+extern Color orange;
 extern Color orchid;
 extern Color fuchsia;
 extern Color aqua;

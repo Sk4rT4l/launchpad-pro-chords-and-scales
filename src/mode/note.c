@@ -9,10 +9,11 @@
 
 // Initializing variables for differents note modes
 int note_mode_solo_flag = 1;
+int note_mode_hold_flag = 0;
 int bt_shift_pressed = 0;
 int bt_record_arm_pressed = 0;
 Chord current_chord;
-ChordType stored_chords[8] = { 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64, 0x64 };
+ChordType stored_chords[8] = { CHORD_NULL, CHORD_NULL, CHORD_NULL, CHORD_NULL, CHORD_NULL, CHORD_NULL, CHORD_NULL, CHORD_NULL };
 
 /**
  * Initializing the note mode layout
@@ -100,6 +101,18 @@ void note_mode_handle(u8 index, u8 value){
 				layout_refresh_octave_buttons();
 			}
 			break;
+		case BT_CLICK:
+			// Toggling between hold mode and normal mode
+			if (value > 0){
+				if (!note_mode_hold_flag){
+					note_mode_hold_flag = 1;
+					color_button(BT_CLICK, orange);
+				} else {
+					note_mode_hold_flag = 0;
+					clear_button(BT_CLICK);
+				}
+			}
+			break;
 		case BT_SOLO:
 			// Toggling between solo and chord mode
 			if (value > 0){
@@ -180,7 +193,7 @@ void note_mode_handle(u8 index, u8 value){
 					stored_chords[((index - BT_PLAY_1) / 10)] = current_chord_type;
 					note_mode_refresh_stored_chords();
 				} else {
-					if (stored_chords[((index - BT_PLAY_1) / 10)] != 0x64) {
+					if (stored_chords[((index - BT_PLAY_1) / 10)] != CHORD_NULL) {
 						current_chord_type = stored_chords[((index - BT_PLAY_1) / 10)];
 						current_chord = chord_list[current_chord_type];
 						note_mode_refresh_stored_chords();
@@ -198,10 +211,12 @@ void note_mode_handle(u8 index, u8 value){
 						midi_send_note(index, value);
 						color_button(index, chartreuse);
 					} else {
-						// Send midi note off
-						midi_stop_note(index, value);
-						clear_button(index);
-						layout_draw_scale();
+						if (!note_mode_hold_flag){
+							// Send midi note off if hold flag is off
+							midi_stop_note(index, value);
+							clear_button(index);
+							layout_draw_scale();
+						}
 					}
 				} else {
 					Chord chord = chord_list[current_chord_type];
@@ -217,15 +232,18 @@ void note_mode_handle(u8 index, u8 value){
 							}
 						}
 					} else {
-						midi_stop_chord(index, value, chord);
-						u8 pad_index = layout_get_pad_index(index);
-						for (int i = 0; i < chord.size; i++){
-							u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
-							if (bt_index >= 0){
-								clear_button(bt_index);
+						if (!note_mode_hold_flag){
+							// Send noteoff on chord if hold flag is off
+							midi_stop_chord(index, value, chord);
+							u8 pad_index = layout_get_pad_index(index);
+							for (int i = 0; i < chord.size; i++){
+								u8 bt_index = layout_get_pad_button(pad_index + chord.offsets[i]);
+								if (bt_index >= 0){
+									clear_button(bt_index);
+								}
 							}
+							layout_draw_scale();
 						}
-						layout_draw_scale();
 					}
 				}
 			}
@@ -243,7 +261,7 @@ void note_mode_setup_handle(u8 index, u8 value){
 			break;
 		default:
 			if (is_pad(index)){
-				if (index >= 71 && index <= 88){
+				if (index >= BT_FIRST_MIDI_CHANNEL && index <= BT_LAST_MIDI_CHANNEL){
 					// midi channel selection
 					layout_set_midi_channel(index);
 				} else {
@@ -274,7 +292,7 @@ void note_mode_aftertouch(u8 index, u8 value){
 void note_mode_refresh_stored_chords(){
 	u8 start_index = BT_PLAY_1;
 	for (int i = 0; i < 8; i++){
-		if (stored_chords[i] != 0x64){
+		if (stored_chords[i] != CHORD_NULL){
 			if (stored_chords[i] != current_chord_type){
 				color_button((start_index + (10 * i)), olive_green1);
 			} else {
