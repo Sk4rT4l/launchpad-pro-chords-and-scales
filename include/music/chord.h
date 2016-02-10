@@ -39,8 +39,19 @@ typedef struct {
 extern ChordType current_chord_type;
 extern Chord chord_list[CHORD_LIST_SIZE];
 
+/**
+ * Initialize the chord list
+ */
 void chord_list_init();
+
+/**
+ * Change the current chord to the next in chord list
+ */
 void chord_select_next();
+
+/**
+ * Change the current chord to the previous in chord list
+ */
 void chord_select_previous();
 
 #endif /* CHORD_H_ */

@@ -54,6 +54,9 @@ typedef struct {
 extern ScaleType current_scale_type;
 extern Scale scale_list[SCALE_LIST_SIZE];
 
+/**
+ * Initialize scale list
+ */
 void scale_list_init();
 
 #endif /* SCALE_H_ */

@@ -62,13 +62,50 @@
 /* BUTTON FUNCTIONS                           */
 /**********************************************/
 
+/**
+ * Clear all buttons
+ */
 void clear_buttons();
+
+/**
+ * Clear mode buttons (session, note, device, user)
+ */
 void clear_mode_buttons();
+
+/**
+ * Clear 64 pads
+ */
 void clear_pads();
+
+/**
+ * Clear the specified button
+ * @param u8 index Button index
+ */
 void clear_button(u8 index);
+
+/**
+ * Color the specified button with the selected color
+ * @param u8 index Button index
+ * @param Color color Color to use
+ */
 void color_button(u8 index, Color color);
+
+/**
+ * Clear the setup button
+ */
 void clear_setup_button();
+
+/**
+ * Color the setup button with the selected color
+ * @param Color color Color to use
+ */
 void color_setup_button(Color color);
+
+/**
+ * Check if the specified button is a pad
+ * @param u8 index Button index
+ * @return int (0 or 1) Whether or not the specified button is a pad
+ */
 int is_pad(u8 index);
 
 #endif /* BUTTONS_H_ */
