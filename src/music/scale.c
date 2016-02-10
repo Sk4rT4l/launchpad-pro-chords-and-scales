@@ -108,4 +108,16 @@ void scale_list_init()
 		{0,3,5,6,10}
 	};
 	scale_list[SCALE_PENTATONIC_BLUES] = scale_pentatonic_blues;
+	Scale scale_major_bebop = {
+		9,
+		{1,0,1,0,1,1,0,1,1,1,0,1},
+		{0,2,4,5,7,8,9,11}
+	};
+	scale_list[SCALE_MAJOR_BEBOP] = scale_major_bebop;
+	Scale scale_minor_bebop = {
+		9,
+		{1,0,1,0,1,1,0,1,0,1,1,1},
+		{0,2,4,5,7,9,10,11}
+	};
+	scale_list[SCALE_MINOR_BEBOP] = scale_minor_bebop;
 }

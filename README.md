@@ -24,6 +24,8 @@ Here is the list of implemented scales :
 * Major pentatonic
 * Minor pentatonic
 * Pentatonic blues
+* Major bebop
+* Minor bebop
 
 ## TODO
 
