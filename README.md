@@ -1,3 +1,38 @@
+# Chords and scales : How to use
+
+All the magic happens in the note mode. While the note mode is started, the [SOLO] button is colored in yellow, meaning your are triggering only pressed notes.
+To activate the chord mode, you have to press the [SOLO] button. Now, when you press a pad, a chord is send by midi.
+To change the current chord, you have to press [SHIFT] + [UP]/[DOWN].
+You can also save the current chord, to make a shortcut list, by pressing [RECORD ARM] + one of the [PLAY] buttons. The stored chords are accessible by pressing [PLAY] buttons.
+
+To change the current scale and midi channels, you have to go to setup by pressing the [SETUP] button. The bottom list (in pink) is the list of implemented scales and the top list (in green) is the list of midi channels (1-16). Choose your scale/midi channel and press the [SETUP] button again to close setup.
+
+Here is the list of implemented scales :
+* Major
+* Minor
+* Harmonic minor
+* Melodic minor
+* Ionian
+* Dorian
+* Phrygian
+* Lydian
+* Mixolydian
+* Aeolian
+* Locrian
+* Blues
+* Harmonic major
+* Major pentatonic
+* Minor pentatonic
+* Pentatonic blues
+
+## TODO
+
+* Add scales
+* Add chords
+* Use session, device and user modes for use with specific devices (Elektron Octatrack, Akai MPC...)
+* Code refactoring...
+
+
 # Launchpad Pro
 Open source firmware for the Novation Launchpad Pro grid controller!  By customising this code, you can:
 
