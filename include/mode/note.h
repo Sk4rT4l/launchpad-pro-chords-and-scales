@@ -8,6 +8,8 @@
 #ifndef NOTE_H_
 #define NOTE_H_
 
+#include <stdlib.h>
+
 #include "app.h"
 #include "music/chord.h"
 #include "music/scale.h"

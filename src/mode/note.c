@@ -95,9 +95,11 @@ void note_mode_handle(u8 index, u8 value){
 				color_button(BT_SHIFT, yellow);
 				color_button(BT_UP, yellow);
 				color_button(BT_DOWN, yellow);
+				color_button(BT_QUANTISE, yellow);
 			} else {
 				bt_shift_pressed = 0;
 				clear_button(BT_SHIFT);
+				clear_button(BT_QUANTISE);
 				layout_refresh_octave_buttons();
 			}
 			break;
@@ -158,6 +160,15 @@ void note_mode_handle(u8 index, u8 value){
 					}
 					layout_recalculate_pad_notes();
 					layout_refresh_octave_buttons();
+				}
+			}
+			break;
+		case BT_QUANTISE:
+			if (value > 0){
+				if (bt_shift_pressed){
+					// Select a random chord
+					current_chord_type = rand()%CHORD_LIST_SIZE;
+					note_mode_refresh_stored_chords();
 				}
 			}
 			break;
